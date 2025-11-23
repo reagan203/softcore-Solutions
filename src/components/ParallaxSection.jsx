@@ -1,171 +1,49 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register plugins
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxSection({ backgroundImage, text }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const overlayRef = useRef(null);
-  const shapesRef = useRef(null);
-  const [shapes, setShapes] = useState([]);
-  
-  // Generate decorative shapes for the background
-  useEffect(() => {
-    const newShapes = [];
-    const count = 5;
-    
-    for (let i = 0; i < count; i++) {
-      newShapes.push({
-        id: i,
-        x: 10 + Math.random() * 80, // Keep within 10-90% of width
-        y: 10 + Math.random() * 80, // Keep within 10-90% of height
-        size: 5 + Math.random() * 15,
-        opacity: 0.05 + Math.random() * 0.1
-      });
-    }
-    
-    setShapes(newShapes);
-  }, []);
-
-  useEffect(() => {
-    // Subtle parallax effect
-    gsap.fromTo(
-      sectionRef.current,
-      {
-        backgroundPosition: "50% 40%",
-      },
-      {
-        backgroundPosition: "50% 60%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      }
-    );
-
-    // Text animation with timeline
-    const textTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 70%",
-        end: "center 50%",
-        toggleActions: "play none none reverse",
-      }
-    });
-    
-    // Set initial state
-    gsap.set(textRef.current, { 
-      opacity: 0,
-      y: 30,
-    });
-    
-    // Animate text
-    textTl.to(textRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out"
-    });
-    
-    // Overlay fade in
-    gsap.fromTo(
-      overlayRef.current,
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 90%",
-          end: "top 40%",
-          scrub: true,
-        },
-      }
-    );
-    
-    // Animate shapes
-    if (shapesRef.current) {
-      const shapeElements = shapesRef.current.querySelectorAll('.shape');
-      
-      shapeElements.forEach((shape, index) => {
-        // Subtle floating animation
-        gsap.to(shape, {
-          y: `-=${5 + Math.random() * 10}`,
-          x: `${Math.random() > 0.5 ? '+=' : '-='}${Math.random() * 10}`,
-          duration: 3 + Math.random() * 2,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: Math.random() * 1
-        });
-        
-        // Parallax effect on shapes
-        gsap.to(shape, {
-          y: `-=${20 + index * 5}`,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      });
-    }
-
-    return () => {
-      // Clean up ScrollTrigger
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
+  const accentsRef = useRef(null);
 
   return (
     <div
       ref={sectionRef}
-      className="relative h-[50vh] w-full bg-cover bg-center flex items-center justify-center overflow-hidden"
+      className="relative h-[60vh] w-full bg-cover bg-center bg-fixed flex items-center justify-center overflow-hidden"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      {/* Overlay with gradient */}
-      <div 
+      {/* Dark corporate gradient overlay */}
+      <div
         ref={overlayRef}
-        className="absolute inset-0 bg-primary/80"
-      ></div>
-      
-      {/* Decorative shapes */}
-      <div 
-        ref={shapesRef}
-        className="absolute inset-0 z-[1] overflow-hidden"
+        className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/75"
+      />
+
+      {/* Modern geometric accents (corporate, minimal) */}
+      <div
+        ref={accentsRef}
+        className="absolute inset-0 z-[1] pointer-events-none opacity-30"
       >
-        {shapes.map(shape => (
-          <div 
-            key={shape.id}
-            className="shape absolute rounded-full bg-white"
-            style={{
-              left: `${shape.x}%`,
-              top: `${shape.y}%`,
-              width: `${shape.size}%`,
-              height: `${shape.size}%`,
-              opacity: shape.opacity,
-              filter: 'blur(30px)'
-            }}
-          ></div>
-        ))}
+        <div className="absolute top-10 left-10 w-32 h-32 border border-white/10 rounded-xl backdrop-blur-sm"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 border border-white/10 rounded-full backdrop-blur-sm"></div>
       </div>
-      
-      {/* Main text with animation */}
-      <div className="relative z-10 w-[90%] md:w-[70%] p-[5%]">
-        <h2 
-          ref={textRef}
-          className="text-3xl md:text-5xl lg:text-6xl font-bold text-white text-center font-cinematic tracking-wide"
-        >
-          {text}
-        </h2>
+
+      {/* Glass Layer Text Container */}
+      <div className="relative z-10 w-[90%] md:w-[65%]">
+        <div className="backdrop-blur-md bg-white/10 border border-white/15 shadow-[0_8px_30px_rgba(0,0,0,0.3)] rounded-2xl p-6 md:p-10 text-center">
+          <h2
+            ref={textRef}
+            className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white font-cinematic tracking-tight leading-tight"
+          >
+            {text}
+          </h2>
+
+          <div className="mt-4 h-1 w-20 mx-auto bg-white/40 rounded"></div>
+        </div>
       </div>
     </div>
   );

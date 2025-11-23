@@ -1,13 +1,11 @@
 import React, { useRef, useState, useEffect, lazy, Suspense } from "react";
 import SplashScreen from "./components/SplashScreen";
-import FloatingCursor from "./components/FloatingCursor";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 /* eslint-disable no-unused-vars */
-
 
 // Lazy load components for better performance
 const FeatureSection = lazy(() => import("./components/FeatureSection"));
@@ -89,7 +87,6 @@ export default function App() {
 
   return (
     <>
-      <FloatingCursor />
       {loading && <SplashScreen onComplete={() => setLoading(false)} />}
 
       <div
@@ -185,7 +182,7 @@ export default function App() {
           </Suspense>
         </section>
 
-        {/* Footer (Added here) */}
+        {/* Footer */}
         <Suspense fallback={<div className="h-40 bg-bgPrimary"></div>}>
           <Footer />
         </Suspense>

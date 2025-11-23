@@ -16,7 +16,6 @@ export default function FeatureSection({ title, description, imgUrl, reverse }) 
   useEffect(() => {
     if (!textRef.current || !imageRef.current) return;
 
-    // Animate text from left/right
     gsap.fromTo(
       textRef.current,
       { opacity: 0, x: reverse ? 50 : -50 },
@@ -32,7 +31,6 @@ export default function FeatureSection({ title, description, imgUrl, reverse }) 
       }
     );
 
-    // Animate image with scale and rotation
     gsap.fromTo(
       imageRef.current,
       { opacity: 0, scale: 0.9, rotation: reverse ? -5 : 5 },
@@ -51,28 +49,35 @@ export default function FeatureSection({ title, description, imgUrl, reverse }) 
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [reverse]);
 
   return (
     <div
       ref={ref}
-      className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-8 py-12 px-4 md:px-8 bg-white border-b border-gray-100`}
+      className={`flex flex-col ${
+        reverse ? "md:flex-row-reverse" : "md:flex-row"
+      } items-center gap-12 py-20 px-6 md:px-16 bg-gradient-to-b from-white to-gray-50 border-b border-gray-200`}
     >
       <motion.div
         ref={textRef}
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7 }}
-        className="md:w-1/2 max-w-lg"
+        className="md:w-1/2 max-w-xl"
       >
         <Tooltip content="Hover to learn more about this feature" position="right">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4 text-primary font-cinematic cursor-help">
+          <h3 className="text-3xl md:text-4xl font-semibold mb-3 text-[#003366] tracking-tight font-cinematic cursor-help">
             {title}
           </h3>
         </Tooltip>
-        <p className="text-textSecondary text-base md:text-lg leading-relaxed">{description}</p>
+
+        <div className="h-1 w-16 bg-[#003366] rounded-md mb-5"></div>
+
+        <p className="text-gray-700 text-lg leading-relaxed md:leading-8">
+          {description}
+        </p>
       </motion.div>
 
       <motion.div
@@ -80,13 +85,13 @@ export default function FeatureSection({ title, description, imgUrl, reverse }) 
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, delay: 0.2 }}
-        className="md:w-1/2 rounded-lg overflow-hidden shadow-md"
-        whileHover={{ scale: 1.02, boxShadow: "0 10px 30px -10px rgba(0, 71, 171, 0.3)" }}
+        className="md:w-1/2 rounded-xl overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-200 bg-white hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] transition-all"
+        whileHover={{ scale: 1.02 }}
       >
         <img
           src={imgUrl}
           alt={title}
-          className="w-full h-64 object-cover rounded-lg transition-all duration-500"
+          className="w-full h-72 object-cover rounded-xl transition-all duration-500"
         />
       </motion.div>
     </div>

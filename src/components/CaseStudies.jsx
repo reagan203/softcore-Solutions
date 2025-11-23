@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 /* eslint-disable no-unused-vars */
+
 import { motion, AnimatePresence } from "framer-motion";
 import Tooltip from "./Tooltip";
 
@@ -18,7 +19,7 @@ export default function CaseStudies() {
       title: "Global Hotel Chain",
       industry: "Hospitality",
       description:
-        "Implemented our hotel management suite across  properties, resulting in 35% operational efficiency improvement and 28% increase in guest satisfaction scores.",
+        "Implemented our hotel management suite across properties, resulting in 35% operational efficiency improvement and 28% increase in guest satisfaction scores.",
       details:
         "This large-scale implementation involved integrating our property management, guest relations, and analytics modules. The rollout across 200 properties was completed in phases, allowing training and feedback loops that improved adoption rates significantly.",
       metrics: [
@@ -46,22 +47,21 @@ export default function CaseStudies() {
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
     },
     {
-  id: 3,
-  title: "Manufacturing Enterprise",
-  industry: "Manufacturing",
-  description:
-    "Implemented our ERP solution for a global manufacturer, streamlining operations across 4 facilities and reducing production costs by 15% while improving quality control.",
-  details:
-    "The ERP integration covered finance, production, and supply chain modules. Predictive analytics reduced machine downtime and ensured just-in-time raw material procurement, saving both time and cost.",
-  metrics: [
-    { label: "Cost Reduction", value: "15%" },
-    { label: "Quality Improvement", value: "24%" },
-    { label: "ROI Timeline", value: "8 months" },
-  ],
-  image:
- "https://images.unsplash.com/photo-1581091758447-9fc7761b58f0?auto=format&fit=crop&w=800&q=80"
-},
-
+      id: 3,
+      title: "Manufacturing Enterprise",
+      industry: "Manufacturing",
+      description:
+        "Implemented our ERP solution for a global manufacturer, streamlining operations across 4 facilities and reducing production costs by 15% while improving quality control.",
+      details:
+        "The ERP integration covered finance, production, and supply chain modules. Predictive analytics reduced machine downtime and ensured just-in-time raw material procurement, saving both time and cost.",
+      metrics: [
+        { label: "Cost Reduction", value: "15%" },
+        { label: "Quality Improvement", value: "24%" },
+        { label: "ROI Timeline", value: "8 months" },
+      ],
+      image:
+        "https://images.unsplash.com/photo-1581091758447-9fc7761b58f0?auto=format&fit=crop&w=800&q=80",
+    },
   ];
 
   useEffect(() => {
@@ -92,8 +92,7 @@ export default function CaseStudies() {
             duration: 0.6,
             ease: "power2.out",
           }),
-        onLeaveBack: (batch) =>
-          gsap.set(batch, { opacity: 0, y: 50 }),
+        onLeaveBack: (batch) => gsap.set(batch, { opacity: 0, y: 50 }),
       });
     });
 
@@ -110,28 +109,25 @@ export default function CaseStudies() {
           Success Stories
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {caseStudies.map((study) => (
             <Tooltip key={study.id} content={study.industry} position="top">
               <motion.article
-                className="case-card opacity-0 bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 cursor-pointer"
-                whileHover={{
-                  y: -8,
-                  boxShadow: "0 12px 30px -10px rgba(0, 82, 204, 0.25)",
-                }}
+                className="case-card opacity-0 bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                whileHover={{ y: -6, boxShadow: "0 14px 35px -12px rgba(0, 82, 204, 0.2)" }}
               >
-                <figure className="h-48 overflow-hidden">
+                <figure className="h-52 overflow-hidden">
                   <img
                     src={study.image}
                     alt={`${study.title} project`}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </figure>
 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-bold text-deepBlue">{study.title}</h3>
-                    <span className="text-xs font-semibold bg-lightBlue text-enterpriseBlue px-2 py-1 rounded">
+                <div className="p-6 flex flex-col justify-between h-full">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-semibold text-deepBlue">{study.title}</h3>
+                    <span className="text-xs font-semibold bg-lightBlue text-enterpriseBlue px-2 py-1 rounded-lg">
                       {study.industry}
                     </span>
                   </div>
@@ -140,16 +136,16 @@ export default function CaseStudies() {
                     {study.description}
                   </p>
 
-                  <div className="grid grid-cols-3 gap-2 text-center text-sm">
+                  <div className="grid grid-cols-3 gap-3 text-center mb-4">
                     {study.metrics.map((m) => (
-                      <div key={m.label}>
-                        <p className="text-textSecondary">{m.label}</p>
+                      <div key={m.label} className="bg-lightBlue/30 p-2 rounded-md">
+                        <p className="text-textSecondary text-xs">{m.label}</p>
                         <p className="text-enterpriseBlue font-bold">{m.value}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mt-5 text-center">
+                  <div className="mt-auto text-center">
                     <button
                       className="text-enterpriseBlue font-semibold hover:underline"
                       onClick={() => setSelectedStudy(study)}
@@ -174,28 +170,28 @@ export default function CaseStudies() {
       </div>
 
       {/* Decorative backgrounds */}
-      <div className="absolute top-0 left-0 w-1/4 h-1/4 bg-accent opacity-5 rounded-br-full"></div>
-      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-primary opacity-5 rounded-tl-full"></div>
+      <div className="absolute top-0 left-0 w-1/4 h-1/4 bg-accent opacity-5 rounded-br-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-primary opacity-5 rounded-tl-3xl"></div>
 
       {/* Modal Popup */}
       <AnimatePresence>
         {selectedStudy && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedStudy(null)}
           >
             <motion.div
-              className="bg-white rounded-lg shadow-2xl max-w-lg w-full p-8 relative"
-              initial={{ scale: 0.8, opacity: 0 }}
+              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 relative"
+              initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0.85, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-lg"
                 onClick={() => setSelectedStudy(null)}
               >
                 ✕
@@ -203,19 +199,20 @@ export default function CaseStudies() {
               <img
                 src={selectedStudy.image}
                 alt={selectedStudy.title}
-                className="w-full h-48 object-cover rounded mb-4"
+                className="w-full h-56 object-cover rounded mb-6"
               />
               <h3 className="text-2xl font-bold mb-4 text-deepBlue">
                 {selectedStudy.title}
               </h3>
-              <p className="text-textSecondary mb-4">{selectedStudy.details}</p>
-              <ul className="space-y-2 text-sm">
+              <p className="text-textSecondary mb-6">{selectedStudy.details}</p>
+              <div className="grid grid-cols-3 gap-4 text-sm">
                 {selectedStudy.metrics.map((m) => (
-                  <li key={m.label}>
-                    <strong>{m.label}:</strong> {m.value}
-                  </li>
+                  <div key={m.label} className="bg-lightBlue/20 p-2 rounded-md text-center">
+                    <p className="font-semibold text-textSecondary">{m.label}</p>
+                    <p className="text-enterpriseBlue font-bold">{m.value}</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </motion.div>
           </motion.div>
         )}
